@@ -3,13 +3,24 @@
 
 from lib import eulerlib
 
-eulerlib.something()
+def d(n, factors=None):
+    if not factors:
+        factors = eulerlib.prime_factors(n)
 
-def d(n):
-    sum = 0
-    for i in range(1, n):
-        if i %
+    divisors = eulerlib.get_divisors(n, factors)
+    return sum(divisors[:-1])
+
+
+def solution(n):
+    primes = eulerlib.generate_primes(n + 100)
+
+    sum_ = 1
+    for i in range(3, n):
+        sum_ += d(i, eulerlib.prime_factors(i, primes))
+
+    return sum_
+
 
 
 if __name__ == "__main__":
-    d(220)
+    print(solution(10000))
