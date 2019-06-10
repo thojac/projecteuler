@@ -1,5 +1,8 @@
 # Problem  025 - 1000-digit Fibonacci number
 
+def num_digits(n):
+    return len(str(n))
+
 def fib():
     i = 2
     f = 0
@@ -12,8 +15,6 @@ def fib():
 
     return (i, f)
 
-def num_digits(n):
-    return len(list(str(n)))
 
 if __name__ == "__main__":
     print(fib())
