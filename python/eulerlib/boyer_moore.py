@@ -1,13 +1,13 @@
 import string
 
-def boyer_moore_search(text, pattern, alphabet):
-    bad_char_dict, shift_table = preprocessing(pattern, alphabet)
+def boyer_moore(text, pattern, alphabet):
+    bad_char_dict, shift_table = _preprocessing(pattern, alphabet)
     result = []
 
     index = 0
     while index < len(text) - len(pattern):
         # Failed position is always relative to index. Hence it starts at len(pattern) - 1
-        failed_pos = match(text, pattern, index, len(pattern) - 1)
+        failed_pos = _match(text, pattern, index, len(pattern) - 1)
 
         if failed_pos < 0:
             # Means we have a match
@@ -21,7 +21,7 @@ def boyer_moore_search(text, pattern, alphabet):
 
     return result
 
-def match(text, pattern, index, j):
+def _match(text, pattern, index, j):
     while j >= 0 and pattern[j] == text[index + j]:
         j -= 1
     return j
@@ -32,12 +32,12 @@ This part contains the preprocessing neccessary to prepare
 the Boyer Moore Search Alg.
 """
 
-def preprocessing(pattern, alphabet):
-    bad_char_dict = bad_character_setup(pattern, alphabet)
-    shift_table = good_suffix_setup(pattern)
+def _preprocessing(pattern, alphabet):
+    bad_char_dict = _bad_character_setup(pattern, alphabet)
+    shift_table = _good_suffix_setup(pattern)
     return bad_char_dict, shift_table
 
-def bad_character_setup(pattern, alphabet):
+def _bad_character_setup(pattern, alphabet):
     bc_dict = {}
     for c in alphabet:
         bc_dict[c] = -1
@@ -48,7 +48,7 @@ def bad_character_setup(pattern, alphabet):
     return bc_dict
 
 
-def good_suffix_setup(pattern):
+def _good_suffix_setup(pattern):
     m = len(pattern)
     f = [0] * (m + 1)
     shift_table = [0] * (m + 1)
@@ -85,11 +85,11 @@ if __name__ == "__main__":
     text = "PANPANMAN"
     pattern = "PAN"
     alphabet = list(string.ascii_uppercase)
-    res = boyer_moore_search(text, pattern, alphabet)
+    res = boyer_moore(text, pattern, alphabet)
     print(res)
 
     text = "ababababababbababbaabababbababbabab"
     pattern = "abbabab"
     alphabet = list(string.ascii_lowercase)
-    res = boyer_moore_search(text, pattern, alphabet)
+    res = boyer_moore(text, pattern, alphabet)
     print(res)

@@ -1,9 +1,16 @@
 # Problem  026 - Reciprocal cycles
 
-import lib.eulerlib as eulerlib
+import string
 from decimal import *
 
 getcontext().prec = 50
+
+text = "ababababababbababbaabababbababbabab"
+pattern = "abbabab"
+alphabet = list(string.ascii_lowercase)
+
+print(boyer_moore(text, pattern, alphabet))
+
 
 
 def get_decimals_as_tuple(n):
@@ -15,5 +22,6 @@ def cycles():
 
 
 if __name__ == "__main__":
-    for i in range(1, 100):
-        print(i, get_decimals_as_tuple(i).digits)
+    pass
+#    for i in range(1, 100):
+#        print(i, get_decimals_as_tuple(i).digits)
