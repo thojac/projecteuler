@@ -1,30 +1,9 @@
 # Problem  026 - Reciprocal cycles
 
-from eulerlib import generate_primes
-
 """
 Note: This task could be solved faster by looping over a list of all
-cyclic prime numbers. But then cycle_length would be easier to write,
-and i would have to manually create a list containing them
+cyclic prime numbers. But then cycle_length would be easier to write
 """
-
-
-def is_cyclic_prime(prime):
-    for n in str(prime):
-        if n in ['0', '2', '4', '5', '6', '8']:
-            return False
-    return True
-
-def is_full_reptend_prime(p):
-    k = p - 1
-    print(p, '\t', 10**k, 10**k / p, "==", 1 % p)
-    return 10**k == 1
-
-
-def generate_decimals_iterator_2(n):
-    for i in iter(int, 1):
-        yield 10**i % n
-
 
 def generate_decimal_iterator(denominator):
     numerator = 10
@@ -32,33 +11,34 @@ def generate_decimal_iterator(denominator):
         yield numerator // denominator
         numerator = (numerator % denominator) * 10
 
-# Not working on quite a few numbers
-def _cycle_length(n):
-    iter_decimal = generate_decimal_iterator(n)
+# Now working on every possible number
+def cycle_length_brute_force(n):
+    last_position = {}
 
-    # skip first, as this is often 1 - aka terminating cond
-    count = -1
-    prev = -1
-    for dec in iter_decimal:
-        count += 1
-        #print("dec:\t\t", dec)
-        if (dec == 1 or dec == 0) and count > 1:
-            return count
-        elif prev == dec:
-            # Same num inf
-            return 1
-        prev = dec
+    position = 1
+    dividend = 1
+    while True:
+        remainder = dividend % n
 
-    # iterator finished- without reaching repeating patter
-    return 0
+        if remainder == 0:
+            return 0
 
+        if remainder in last_position:
+            return position - last_position[remainder]
+
+        last_position[remainder] = position
+
+        position += 1
+        dividend = remainder * 10
 
 def solution():
-    pass
+    max_n = (0, 0) # number, count
+    for i in range(1, 1000):
+        count = cycle_length_brute_force(i)
+        if max_n[1] < count:
+            max_n = (i, count)
+    print(max_n)
 
 
 if __name__ == "__main__":
-    primes = generate_primes(20)
-    cyclic_primes = list(filter(lambda x: is_full_reptend_prime(x), primes))
-    print(primes)
-    print(cyclic_primes)
+    solution()
