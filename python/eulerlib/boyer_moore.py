@@ -1,6 +1,17 @@
 import string
 
 def boyer_moore(text, pattern, alphabet):
+    """Boyer–Moore string-search algorithm
+
+    Args:
+        text (str): The string being searched
+        pattern (str): The string to be searched for
+        alphabet (list): A list with each character in the alphabet
+
+    Returns:
+        list: index of all matches
+    """
+
     bad_char_dict, shift_table = _preprocessing(pattern, alphabet)
     result = []
 
@@ -79,6 +90,7 @@ def _good_suffix_preprocess2(f, s, m):
         if i == j: j = f[j]
 
     return s
+
 
 
 if __name__ == "__main__":
