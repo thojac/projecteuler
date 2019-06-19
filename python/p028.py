@@ -1,22 +1,29 @@
-# Problem  028 -
+# Problem  028 - Number spiral diagonals
 
-def solver(size):
-    if size = 1:
+def get_layer_sum(side_len):
+    if side_len == 1:
         return 1
-    elif size % 2 == 0:
-        return -1 # not a spiral
-    else:
-        return 1 + rec_solver(2,3,size)
 
-def rec_solver(start_sum, size, size_lim):
+    start = (side_len-2)**2 + (side_len - 1)
+    end = side_len**2
+    steps = side_len - 1
 
-
-    return 1
+    return sum(list(range(start, end + 1, steps)))
 
 
-def solution():
-    pass
+# A bit more clever variant... Must start at 3 to work.
+def get_layer_sum2(side_len):
+    return (4 * (side_len**2)) - (6*(side_len - 1))
+
+def get_spiral_diagonal_sum(limit):
+    total_sum = 0
+    for side_len in range(1, limit + 1, 2):
+        total_sum += get_layer_sum(side_len)
+
+    return total_sum
+
 
 if __name__ == "__main__":
-    solution()
+    print(get_spiral_diagonal_sum(5))
+    print(get_spiral_diagonal_sum(1001))
 
