@@ -1,4 +1,5 @@
 import math
+from itertools import combinations
 
 def sieve(n):
     is_prime = [1] * (n + 1)
@@ -53,7 +54,13 @@ def _divisors_rec(n, factors, divisors):
             _divisors_rec(x, factors[(index + 1):], divisors)
             x *= factor[0]
 
+def multi_combinations(iterable, range_):
+    comb = []
+    for i in range_:
+        for c in list(combinations(iterable, i)):
+            comb.append(c)
 
+    return comb
 
 if __name__ == "__main__":
     get_divisors(36)
